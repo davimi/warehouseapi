@@ -19,9 +19,12 @@ trait WarehouseService {
     val productAvailable = getAllAvailableProducts.filter(p => p.name == productName)
 
     productAvailable.headOption match {
+
       case Some(product) =>
-        updateInventory(product.contain_articles)
-        Success(product)
+        if (updateInventory(product.contain_articles)) {
+          Success(product)
+        } else Failure(new Exception(s"Could not update item stock properly"))
+
       case None => Failure(new Exception(s"Product $productName not available"))
     }
   }

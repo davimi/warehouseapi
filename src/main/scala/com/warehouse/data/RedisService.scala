@@ -11,13 +11,17 @@ class RedisService(port: Int = 6379) extends DataService with DomainJsonFormats 
 
   val redis = new RedisClient("localhost", port)
 
+  override def getItem(artId: String): Option[Item] = redis.get(generateItemKey(artId)).map(item => item.parseJson.convertTo[Item])
+
+  override def updateItem(artId: String, item: Item): Boolean = redis.set(generateItemKey(artId), item.toJson.toString())
+
   override def getInventory(): Inventory = {
     val inventoryItemKeys: Set[String] = redis.smembers(inventoryArticlesKeys)
       .map( keys =>
         keys.flatten).getOrElse(Set.empty)
-    println("Item Keys: " + inventoryItemKeys)
+
     val items = inventoryItemKeys.flatMap { key =>
-      redis.get(generateItemKey(key)).map(item => item.parseJson.convertTo[Item])
+      getItem(key)
     }
     println("Current inventory: " + items.map(_.toString))
     Inventory(items.toSeq)
@@ -31,20 +35,6 @@ class RedisService(port: Int = 6379) extends DataService with DomainJsonFormats 
         )
       )
       productSet.getOrElse(Set.empty[Option[Product]]).flatten.toSeq
-  }
-
-  override def updateInventory(articles: Seq[Article]): Boolean = {
-
-    articles.map { article =>
-      val inventoryItem = redis.get(generateItemKey(article.artId)).map(item => item.parseJson.convertTo[Item])
-      val updatedItem = inventoryItem.map(item => item.copy(item.artId, item.name, item.stock - article.amountOf))
-      val updated = updatedItem match {
-        case Some(item) =>
-          redis.set(generateItemKey(article.artId), item.toJson.toString())
-        case None => false
-      }
-      updated
-    }.reduce(_ & _)
   }
 }
 

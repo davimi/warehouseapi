@@ -1,10 +1,10 @@
 package com.warehouse.api
 
 
-import akka.http.scaladsl.model.{ContentTypes, StatusCode, StatusCodes}
+import akka.http.scaladsl.model.StatusCodes
 import akka.http.scaladsl.server.Directives._
-import akka.http.scaladsl.server.{Directive, Directive1, Route}
-import com.warehouse.domain.{Product, ProductJsonSupport}
+import akka.http.scaladsl.server.{Directive, Route}
+import com.warehouse.domain.ProductJsonSupport
 import com.warehouse.service.WarehouseService
 
 import scala.util.{Failure, Success}
