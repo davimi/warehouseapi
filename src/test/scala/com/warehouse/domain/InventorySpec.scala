@@ -22,4 +22,14 @@ class InventorySpec extends AnyFlatSpec with Matchers with InventoryJsonSupport 
     inventory shouldEqual expected
   }
 
+  "Inventory" should "remove articles" in {
+    val inventory = Inventory(Seq(Item("1", "leg", 12), Item("2", "screw", 17), Item("3", "seat", 2), Item("4", "table top", 1)).sortBy(_.name))
+    val article = Article("1", 4)
+
+    val expected = Inventory(Seq(Item("1", "leg", 8), Item("2", "screw", 17), Item("3", "seat", 2), Item("4", "table top", 1)))
+    val actual = Inventory(inventory.removeItemStock(article).inventory.sortBy(_.name))
+
+    actual shouldEqual expected
+  }
+
 }

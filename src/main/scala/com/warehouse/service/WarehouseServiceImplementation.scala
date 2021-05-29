@@ -1,15 +1,15 @@
 package com.warehouse.service
 import com.warehouse.data.DataService
 import com.warehouse.domain
-import com.warehouse.domain.Inventory
+import com.warehouse.domain.{Article, Inventory}
 
 import scala.util.{Failure, Try}
 
-class WarehouseServiceImplementation(inventoryService: DataService) extends WarehouseService {
+class WarehouseServiceImplementation(database: DataService) extends WarehouseService {
 
-  override def getAllProducts: Seq[domain.Product] = inventoryService.getAllProducts()
+  override def getAllProducts: Seq[domain.Product] = database.getAllProducts()
 
-  override def sellProduct(productId: Int, quantity: Int): Try[domain.Product] = Failure(new Exception("fail"))
+  override def getInventory: Inventory = database.getInventory()
 
-  override def getInventory: Inventory = inventoryService.getInventory()
+  override def updateInventory(articles: Seq[Article]): Boolean = database.updateInventory(articles)
 }

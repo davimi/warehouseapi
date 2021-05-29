@@ -7,4 +7,6 @@ trait DataService {
   def getAllProducts(): Seq[Product]
 
   def getInventory(): Inventory
+
+  def updateInventory(articles: Seq[Article]): Boolean
 }

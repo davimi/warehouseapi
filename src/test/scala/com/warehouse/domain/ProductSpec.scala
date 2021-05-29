@@ -19,11 +19,25 @@ class ProductSpec extends AnyFlatSpec with Matchers with ProductJsonSupport {
     products shouldEqual expected
   }
 
-  "Product filtering" should "be positive if enough inventory exists" in {
+  "Product filtering" should "return the product if enough inventory exists" in {
     val product = Product("Dining Chair", Seq(Article("1", 4), Article("2", 8), Article("3", 1)))
     val inventory = Inventory(List(Item("1", "screw", 5), Item("2", "screw", 8), Item("3", "screw", 2)))
 
     product.isAvailableBasedOnInventory(inventory) shouldEqual true
+  }
+
+  "Product filtering" should "not return the product if an item is missing" in {
+    val product = Product("Dining Chair", Seq(Article("1", 4), Article("2", 8), Article("3", 1)))
+    val inventory = Inventory(List(Item("1", "screw", 5), Item("2", "screw", 8)))
+
+    product.isAvailableBasedOnInventory(inventory) shouldEqual false
+  }
+
+  "Product filtering" should "not return the product if not enough inventory exists" in {
+    val product = Product("Dining Chair", Seq(Article("1", 4), Article("2", 8), Article("3", 1)))
+    val inventory = Inventory(List(Item("1", "screw", 5), Item("2", "screw", 0), Item("3", "screw", 2)))
+
+    product.isAvailableBasedOnInventory(inventory) shouldEqual false
   }
 
 }

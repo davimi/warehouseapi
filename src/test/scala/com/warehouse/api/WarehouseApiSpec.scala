@@ -20,15 +20,16 @@ class WarehouseApiSpec extends AnyFlatSpec with Matchers with ScalatestRouteTest
 
     override def getAllProducts: Seq[Product] = List(chair)
 
-    override def sellProduct(productId: Int, quantity: Int): Try[Product] = Success(chair)
+    override def sellProduct(productName: String, quantity: Int): Try[Product] = Success(chair)
 
     override def getInventory: Inventory = Inventory(Seq.empty)
+
+    override def updateInventory(articles: Seq[Article]): Boolean = true
   }
 
   val api = new WarehouseApiImplementaion(new TestWarehouseService)
 
-  private val duration = Duration(3, TimeUnit.SECONDS)
-  implicit val routeTestTimeout = RouteTestTimeout(duration)
+  implicit val routeTestTimeout = RouteTestTimeout(Duration(3, TimeUnit.SECONDS))
 
 
   "The API" should "provide an endpoints of all products" in {

@@ -28,7 +28,8 @@ object LoadDB extends App with DomainJsonFormats {
   }
 
   inventory.inventory.foreach { item =>
-    redis.sadd(RedisService.inventoryKey, item.toJson.toString())
+    redis.sadd(RedisService.inventoryArticlesKeys, item.artId)
+    redis.set(RedisService.inventoryItemsPrefix + item.artId, item.toJson.toString())
   }
 
   println(redis.keys())

@@ -6,12 +6,13 @@ import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.{Directive, Directive1, Route}
 import com.warehouse.domain.{Product, ProductJsonSupport}
 import com.warehouse.service.WarehouseService
-import spray.json.enrichAny
+
+import scala.util.{Failure, Success}
 
 class WarehouseApiImplementaion(warehouseService: WarehouseService) extends WarehouseApi with ProductJsonSupport {
 
   private val productsPath: Directive[Unit] = path("warehouse" / "products")
-  private val sellPath: Directive[Tuple1[Int]] = path("warehouse" / "product" / IntNumber)
+  private val sellPath = path("warehouse" / "product" / Segment)
 
    override val allProductsRoute: Route = productsPath {
      get {
@@ -22,10 +23,14 @@ class WarehouseApiImplementaion(warehouseService: WarehouseService) extends Ware
      }
    }
 
-  override val productSellRoute: Route = sellPath { productId =>
+  override val productSellRoute: Route = sellPath { productName =>
      post {
        pathEndOrSingleSlash {
-         complete(StatusCodes.OK)
+         val sold = warehouseService.sellProduct(productName, 1)
+         sold match {
+           case Success(product) => complete(product)
+           case Failure(_) => complete(StatusCodes.NoContent)
+         }
        }
      }
   }

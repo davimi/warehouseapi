@@ -19,3 +19,4 @@ Run `Main` to run the API.
 - store data in DB as binary instead of json
 - handle errors & timeouts between app and DB
 - use product IDs instead of names
+- Proper logging (not `println`)
