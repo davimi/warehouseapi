@@ -1,14 +1,12 @@
 package com.warehouse
 
-import com.warehouse.data.RedisService
-import com.warehouse.domain.{Inventory, InventoryJsonSupport, Product, ProductJsonSupport, Products}
+import com.warehouse.domain.DomainJsonFormats
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
-import spray.json._
 
 import scala.util.Success
 
-class LoadDBSpec extends AnyFlatSpec with Matchers with ProductJsonSupport with InventoryJsonSupport {
+class LoadDBSpec extends AnyFlatSpec with Matchers with DomainJsonFormats {
 
   "The preloading of the database" should "read files from resources" in {
 

@@ -3,7 +3,7 @@ package com.warehouse.api
 import akka.http.scaladsl.model.StatusCodes._
 import akka.http.scaladsl.testkit.{RouteTestTimeout, ScalatestRouteTest}
 import com.warehouse.domain._
-import com.warehouse.service.WarehouseService
+import com.warehouse.warehouselogic.WarehouseService
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 

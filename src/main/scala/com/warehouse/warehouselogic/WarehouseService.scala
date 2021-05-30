@@ -1,4 +1,4 @@
-package com.warehouse.service
+package com.warehouse.warehouselogic
 
 
 import com.warehouse.domain

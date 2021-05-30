@@ -1,4 +1,4 @@
-package com.warehouse.service
+package com.warehouse.warehouselogic
 import com.warehouse.data.DataService
 import com.warehouse.domain
 import com.warehouse.domain.{Article, Inventory}

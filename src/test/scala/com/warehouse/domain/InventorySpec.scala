@@ -6,7 +6,6 @@ import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import spray.json._
 
-import scala.util.Success
 
 class InventorySpec extends AnyFlatSpec with Matchers with InventoryJsonSupport {
 

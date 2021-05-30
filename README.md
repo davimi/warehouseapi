@@ -4,7 +4,7 @@ This API implements two endpoints for a warehouse application.
 
 - Get a list of all available products: `GET http://localhost:8080/warehouse/products`
 
-- Sell a product: `POST http://localhost:8080/warehouse/product/<id>`
+- Sell a product: `POST http://localhost:8080/warehouse/product/<name>`
 
 ## Running the project
 
